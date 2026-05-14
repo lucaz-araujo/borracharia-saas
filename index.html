@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h2>📊 Resumo Financeiro</h2>
+    <div class="card-grid">
+        <div class="stat-card success">
+            <h3>Entradas</h3>
+            <div class="stat-value">R$ {{ "%.2f"|format(resumo.entrada) }}</div>
+        </div>
+        <div class="stat-card danger">
+            <h3>Saídas</h3>
+            <div class="stat-value">R$ {{ "%.2f"|format(resumo.saida) }}</div>
+        </div>
+        <div class="stat-card info">
+            <h3>Lucro</h3>
+            <div class="stat-value">R$ {{ "%.2f"|format(resumo.lucro) }}</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

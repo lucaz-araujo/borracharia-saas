@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h2>💸 Controle de Gastos</h2>
+    
+    <!-- FORMULÁRIO ADICIONAR -->
+    <form method="POST" action="/add_gasto">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1rem; max-width: 600px;">
+            <div class="form-group">
+                <label>Item:</label>
+                <input type="text" name="item" required placeholder="Ex: Cola, Óleo">
+            </div>
+            <div class="form-group">
+                <label>Valor (R$):</label>
+                <input type="number" name="valor" step="0.01" required placeholder="10.00">
+            </div>
+            <div class="form-group">
+                <label>Quantidade:</label>
+                <input type="number" name="quantidade" value="1" min="1">
+            </div>
+            <div style="align-self: end;">
+                <button type="submit" class="btn btn-primary">➕ Adicionar</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- TABELA DE GASTOS -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Valor Unit.</th>
+                    <th>Quant.</th>
+                    <th>Total</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for gasto in gastos %}
+                <tr>
+                    <td>{{ gasto[1] }}</td>
+                    <td>R$ {{ "%.2f"|format(gasto[2]) }}</td>
+                    <td>{{ gasto[4] or 1 }}</td>
+                    <td>R$ {{ "%.2f"|format((gasto[2] or 0) * (gasto[4] or 1)) }}</td>
+                    <td>{{ gasto[3] }}</td>
+                    <td>
+                        <a href="/delete_gasto/{{ gasto[0] }}" 
+                           class="btn btn-danger" 
+                           onclick="return confirm('Confirmar exclusão?')">🗑️</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

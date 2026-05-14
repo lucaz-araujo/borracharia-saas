@@ -1,0 +1,3 @@
+Frontend: HTML5 + CSS3 puro (responsivo)
+Backend: Python + Flask
+Banco: SQLite (SQL nativo)

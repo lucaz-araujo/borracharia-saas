@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="card">
+    <h2>🔧 Controle de Serviços</h2>
+    
+    <!-- FORMULÁRIO ADICIONAR -->
+    <form method="POST" action="/add_servico">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 1rem; max-width: 600px;">
+            <div class="form-group">
+                <label>Serviço:</label>
+                <input type="text" name="servico" required placeholder="Ex: Troca de pneu">
+            </div>
+            <div class="form-group">
+                <label>Valor (R$):</label>
+                <input type="number" name="valor" step="0.01" required placeholder="25.00">
+            </div>
+            <div class="form-group">
+                <label>Quantidade:</label>
+                <input type="number" name="quantidade" value="1" min="1">
+            </div>
+            <div style="align-self: end;">
+                <button type="submit" class="btn btn-primary">➕ Adicionar</button>
+            </div>
+        </div>
+    </form>
+
+    <!-- TABELA DE SERVIÇOS -->
+    <div class="table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Serviço</th>
+                    <th>Valor Unit.</th>
+                    <th>Quant.</th>
+                    <th>Total</th>
+                    <th>Data</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for servico in servicos %}
+                <tr>
+                    <td>{{ servico[1] }}</td>
+                    <td>R$ {{ "%.2f"|format(servico[2]) }}</td>
+                    <td>{{ servico[4] or 1 }}</td>
+                    <td>R$ {{ "%.2f"|format((servico[2] or 0) * (servico[4] or 1)) }}</td>
+                    <td>{{ servico[3] }}</td>
+                    <td>
+                        <a href="/delete_servico/{{ servico[0] }}" 
+                           class="btn btn-danger" 
+                           onclick="return confirm('Confirmar exclusão?')">🗑️</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}
